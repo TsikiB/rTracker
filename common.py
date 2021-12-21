@@ -6,18 +6,16 @@ from tkinter import filedialog as fd
 import webbrowser
 import logging
 
+
+
 #from selenium import webdriver
 #from selenium.webdriver.common.keys import Keys
-
-def setglobalvariables():
-    global ConfigFile 
-    ConfigFile = "./rTrackerConfig.INI"
-
 
 def log_start_info():
     now = datetime.now()
     date_time = now.strftime("%d/%m/%Y_%H:%M:%S")
     logging.info('>>> rTracker started at: ' + str(date_time))
+
 
 def open_borwser(url):
     try:
