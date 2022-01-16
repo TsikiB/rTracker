@@ -1,17 +1,61 @@
 # rTracker: the Release Tracker App
-from configuration import *
-from common import *
-import logging
+#file: main.py
+import global_vars
+import config 
+import common
+import log
+import GetExcelData
+import tkinter as tk
+from tkinter import filedialog as fd
 
-log_start_info()
-getConfigHeader() 
-getConfigTeams()
-print('Done !!')
+
+#--- Set Configuration ---
+config.getLogLevel()
+if not config.setLogLevel():
+    log.log_finish_info()
+    quit()
+config.getConfigTeams()
+config.getConfigTeamMembers()
+
+log.log_start_info()
+root = tk.Tk()
+root.withdraw()
+raw_data_file = fd.askopenfile(defaultextension='.csv', 
+                                filetypes=[("csv", '*.csv'),("Excel","*.xlsx"),("all files","*.*")],
+                                title = "Select Data Source")
+global_vars.DataFilePath = raw_data_file.name
+log.LogInfo('DataFilePath: ' + global_vars.DataFilePath)
+config.getConfigHeaders()
+#print (global_vars.ConfigHeader)
+GetExcelData.filterInputFile(global_vars.DataFilePath)
+
+
+ 
+
+log.log_finish_info()
+
+log.setLogLevel()
+print('ProjectDir: ' + str(config.ProjectDir))
+print('LogFile: ' + config.LogFile)
+print ('logLevel : ' + config.logLevel)
+
+
+
+
+
+
+
+log.log_finish_info()
+
+ttmp = common.open_borwser('https://getnada.com')
 
 
 #Start the routine
-open_borwser('https://jira.verifone.com/issues/?filter=69651')
-logging.info('open browser = ' + str(open_borwser('http://www.verifone.com')))
+UrlInFocus = 'http://www.verifone.com'
+common.open_borwser('https://jira.verifone.com/issues/?filter=69651')
+#LogInfo('open browser = ' + str(open_borwser('http://www.verifone.com')))
+log.LogInfo(UrlInFocus)
+log.LogError('Some error text will go in here')
 
 calculation_to_units = 24
 name_of_unit = "hours"
